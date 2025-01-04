@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: SQLite
+    type: frser-sqlite-datasource
+    access: proxy
+    url: /opggvisualizer_data/data.db
+    jsonData:
+      # Path inside the container; since we mounted the volume, it should match the path
+      path: /opggvisualizer_data/data.db
+    isDefault: true
+    editable: false
