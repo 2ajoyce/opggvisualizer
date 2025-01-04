@@ -12,7 +12,7 @@ This application makes a single api call to both services every 24 hours. Please
 ### Screenshot
 
 ![alt text](docs/images/image.png)
-*...I will not be accepting feedback on these stats*
+_...I will not be accepting feedback on these stats_
 
 ### System Requirements
 
@@ -41,7 +41,7 @@ Build: `make build`
 
 Initialize Data `make init`
 
-Run: `make run`
+Run: `make up`
 
 ### Grafana
 
