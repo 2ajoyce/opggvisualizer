@@ -43,7 +43,7 @@
         "defaults": {
           "color": {
             "fixedColor": "dark-red",
-            "mode": "continuous-GrYlRd"
+            "mode": "palette-classic-by-name"
           },
           "custom": {
             "axisBorderShow": false,
@@ -126,13 +126,11 @@
             "type": "frser-sqlite-datasource",
             "uid": "P2D2EEF3E092AF52B"
           },
-          "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.summoner_name AS 'Summoner',\n    10-participants.op_score_rank AS 'Op Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n    champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "queryText": "WITH RankedData AS (\n    SELECT\n        games.created_at AS 'time',\n        10 - participants.op_score_rank AS 'Op Score',\n        ROW_NUMBER() OVER (ORDER BY games.created_at ASC) AS row_num\n    FROM\n        participants\n    JOIN\n        games ON participants.game_id = games.game_id\n    JOIN\n        champions ON participants.champion_id = champions.champion_id\n    WHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n),\nMovingAverage AS (\n    SELECT\n        time,\n        [Op Score],\n        (SELECT AVG([Op Score])\n         FROM RankedData r2\n         WHERE r2.row_num BETWEEN r1.row_num - 5 AND r1.row_num + 5) AS Trendline\n    FROM RankedData r1\n)\nSELECT\n    time,\n    [Op Score],\n    Trendline\nFROM MovingAverage\nORDER BY time ASC;",
           "queryType": "time series",
-          "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.summoner_name AS 'Summoner',\n    10-participants.op_score_rank AS 'Op Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n    champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "rawQueryText": "WITH RankedData AS (\n    SELECT\n        games.created_at AS 'time',\n        10 - participants.op_score_rank AS 'Op Score',\n        ROW_NUMBER() OVER (ORDER BY games.created_at ASC) AS row_num\n    FROM\n        participants\n    JOIN\n        games ON participants.game_id = games.game_id\n    JOIN\n        champions ON participants.champion_id = champions.champion_id\n    WHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n),\nMovingAverage AS (\n    SELECT\n        time,\n        [Op Score],\n        (SELECT AVG([Op Score])\n         FROM RankedData r2\n         WHERE r2.row_num BETWEEN r1.row_num - 5 AND r1.row_num + 5) AS Trendline\n    FROM RankedData r1\n)\nSELECT\n    time,\n    [Op Score],\n    Trendline\nFROM MovingAverage\nORDER BY time ASC;",
           "refId": "OP Score",
-          "timeColumns": [
-            "time"
-          ]
+          "timeColumns": ["time"]
         }
       ],
       "title": "OP Score",
@@ -156,7 +154,7 @@
         "defaults": {
           "color": {
             "fixedColor": "yellow",
-            "mode": "shades"
+            "mode": "palette-classic-by-name"
           },
           "custom": {
             "axisBorderShow": false,
@@ -237,13 +235,11 @@
             "type": "frser-sqlite-datasource",
             "uid": "P2D2EEF3E092AF52B"
           },
-          "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.vision_score AS 'Vision Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "queryText": "WITH RankedData AS (\n    SELECT\n        games.created_at AS 'time',\n        participants.vision_score AS 'Vision Score',\n        ROW_NUMBER() OVER (PARTITION BY participants.summoner_name ORDER BY games.created_at ASC) AS row_num\n    FROM\n        participants\n    JOIN\n        games ON participants.game_id = games.game_id\n    JOIN\n        champions ON participants.champion_id = champions.champion_id\n    WHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n),\nMovingAverage AS (\n    SELECT\n        time,\n        [Vision Score],\n        (SELECT AVG([Vision Score])\n         FROM RankedData r2\n         WHERE r2.row_num BETWEEN r1.row_num - 5 AND r1.row_num + 5) AS Trendline\n    FROM RankedData r1\n)\nSELECT\n    time,\n    [Vision Score],\n    Trendline\nFROM MovingAverage\nORDER BY time ASC",
           "queryType": "time series",
-          "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.vision_score AS 'Vision Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "rawQueryText": "WITH RankedData AS (\n    SELECT\n        games.created_at AS 'time',\n        participants.vision_score AS 'Vision Score',\n        ROW_NUMBER() OVER (PARTITION BY participants.summoner_name ORDER BY games.created_at ASC) AS row_num\n    FROM\n        participants\n    JOIN\n        games ON participants.game_id = games.game_id\n    JOIN\n        champions ON participants.champion_id = champions.champion_id\n    WHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n),\nMovingAverage AS (\n    SELECT\n        time,\n        [Vision Score],\n        (SELECT AVG([Vision Score])\n         FROM RankedData r2\n         WHERE r2.row_num BETWEEN r1.row_num - 5 AND r1.row_num + 5) AS Trendline\n    FROM RankedData r1\n)\nSELECT\n    time,\n    [Vision Score],\n    Trendline\nFROM MovingAverage\nORDER BY time ASC",
           "refId": "OP Score",
-          "timeColumns": [
-            "time"
-          ]
+          "timeColumns": ["time"]
         }
       ],
       "title": "Vision Score",
@@ -267,7 +263,7 @@
         "defaults": {
           "color": {
             "fixedColor": "purple",
-            "mode": "shades"
+            "mode": "palette-classic-by-name"
           },
           "custom": {
             "axisBorderShow": false,
@@ -348,13 +344,11 @@
             "type": "frser-sqlite-datasource",
             "uid": "P2D2EEF3E092AF52B"
           },
-          "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.lane_score AS 'Lane Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "queryText": "WITH RankedData AS (\n    SELECT\n        games.created_at AS 'time',\n        participants.lane_score AS 'Lane Score',\n        ROW_NUMBER() OVER (PARTITION BY participants.summoner_name ORDER BY games.created_at ASC) AS row_num\n    FROM\n        participants\n    JOIN\n        games ON participants.game_id = games.game_id\n    JOIN\n        champions ON participants.champion_id = champions.champion_id\n    WHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n),\nMovingAverage AS (\n    SELECT\n        time,\n        [Lane Score],\n        (SELECT AVG([Lane Score])\n         FROM RankedData r2\n         WHERE r2.row_num BETWEEN r1.row_num - 2 AND r1.row_num + 2) AS Trendline\n    FROM RankedData r1\n)\nSELECT\n    time,\n    [Lane Score],\n    Trendline\nFROM MovingAverage\nORDER BY time ASC",
           "queryType": "time series",
-          "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.lane_score AS 'Lane Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "rawQueryText": "WITH RankedData AS (\n    SELECT\n        games.created_at AS 'time',\n        participants.lane_score AS 'Lane Score',\n        ROW_NUMBER() OVER (PARTITION BY participants.summoner_name ORDER BY games.created_at ASC) AS row_num\n    FROM\n        participants\n    JOIN\n        games ON participants.game_id = games.game_id\n    JOIN\n        champions ON participants.champion_id = champions.champion_id\n    WHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n),\nMovingAverage AS (\n    SELECT\n        time,\n        [Lane Score],\n        (SELECT AVG([Lane Score])\n         FROM RankedData r2\n         WHERE r2.row_num BETWEEN r1.row_num - 2 AND r1.row_num + 2) AS Trendline\n    FROM RankedData r1\n)\nSELECT\n    time,\n    [Lane Score],\n    Trendline\nFROM MovingAverage\nORDER BY time ASC",
           "refId": "OP Score",
-          "timeColumns": [
-            "time"
-          ]
+          "timeColumns": ["time"]
         }
       ],
       "title": "Lane Score",
@@ -433,8 +427,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -506,9 +499,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "OP Score",
@@ -575,8 +566,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -622,7 +612,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 34
+            "y": 58
           },
           "id": 5,
           "options": {
@@ -648,9 +638,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Vision Score",
@@ -717,8 +705,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -764,7 +751,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 42
+            "y": 66
           },
           "id": 6,
           "options": {
@@ -790,9 +777,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Lane Score",
@@ -875,8 +860,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -891,7 +875,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 51
+            "y": 75
           },
           "id": 8,
           "options": {
@@ -917,9 +901,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "OP Score",
@@ -986,8 +968,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1002,7 +983,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 59
+            "y": 83
           },
           "id": 9,
           "options": {
@@ -1028,9 +1009,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Vision Score",
@@ -1097,8 +1076,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1113,7 +1091,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 67
+            "y": 91
           },
           "id": 10,
           "options": {
@@ -1139,9 +1117,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Lane Score",
@@ -1224,8 +1200,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1240,7 +1215,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 76
+            "y": 100
           },
           "id": 12,
           "options": {
@@ -1266,9 +1241,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "OP Score",
@@ -1335,8 +1308,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1351,7 +1323,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 84
+            "y": 108
           },
           "id": 13,
           "options": {
@@ -1377,9 +1349,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Vision Score",
@@ -1446,8 +1416,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1462,7 +1431,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 92
+            "y": 116
           },
           "id": 14,
           "options": {
@@ -1488,9 +1457,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Lane Score",
@@ -1589,7 +1556,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 101
+            "y": 29
           },
           "id": 16,
           "options": {
@@ -1615,9 +1582,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "OP Score",
@@ -1700,7 +1665,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 109
+            "y": 37
           },
           "id": 17,
           "options": {
@@ -1726,9 +1691,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Vision Score",
@@ -1795,8 +1758,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1811,7 +1773,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 117
+            "y": 45
           },
           "id": 18,
           "options": {
@@ -1837,9 +1799,7 @@
               "queryType": "time series",
               "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
               "refId": "OP Score",
-              "timeColumns": [
-                "time"
-              ]
+              "timeColumns": ["time"]
             }
           ],
           "title": "Lane Score",
@@ -1961,6 +1921,6 @@
   "timezone": "browser",
   "title": "League Stats",
   "uid": "be8tq86iyycxsd",
-  "version": 13,
+  "version": 1,
   "weekStart": ""
 }
