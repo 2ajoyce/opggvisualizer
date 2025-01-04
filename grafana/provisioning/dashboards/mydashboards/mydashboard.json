@@ -1,0 +1,1966 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 19,
+      "panels": [],
+      "title": "Cumulative",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "P2D2EEF3E092AF52B"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-red",
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 10,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.summoner_name AS 'Summoner',\n    10-participants.op_score_rank AS 'Op Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n    champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "queryType": "time series",
+          "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.summoner_name AS 'Summoner',\n    10-participants.op_score_rank AS 'Op Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n    champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "refId": "OP Score",
+          "timeColumns": [
+            "time"
+          ]
+        }
+      ],
+      "title": "OP Score",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Score (.*)",
+            "renamePattern": "$1"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "P2D2EEF3E092AF52B"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "yellow",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.vision_score AS 'Vision Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "queryType": "time series",
+          "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.vision_score AS 'Vision Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "refId": "OP Score",
+          "timeColumns": [
+            "time"
+          ]
+        }
+      ],
+      "title": "Vision Score",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Score (.*)",
+            "renamePattern": "$1"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "P2D2EEF3E092AF52B"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.lane_score AS 'Lane Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "queryType": "time series",
+          "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.lane_score AS 'Lane Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nORDER BY \n    games.created_at ASC",
+          "refId": "OP Score",
+          "timeColumns": [
+            "time"
+          ]
+        }
+      ],
+      "title": "Lane Score",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Score (.*)",
+            "renamePattern": "$1"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 4,
+      "panels": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "max": 10,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*RED/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*BLUE/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 26
+          },
+          "id": 1,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN ('RED','BLUE')\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "OP Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*RED/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*BLUE/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 34
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Vision Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*RED/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*BLUE/"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 42
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.team_key AS 'Side',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.team_key IN (${SIDE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Lane Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "By Side",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 7,
+      "panels": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "max": 10,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 51
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN ('TOP','JUNGLE','MIDDLE','BOTTOM')\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "OP Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 59
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Vision Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 67
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.position AS 'Lane',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.position IN (${LANE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Lane Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "By Lane",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "id": 11,
+      "panels": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "max": 10,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 76
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN ('MAGE','TANK')\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "OP Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 84
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Vision Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 92
+          },
+          "id": 14,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    participants.role AS 'Role',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND participants.role IN (${ROLE:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Lane Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "By Role",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 15,
+      "panels": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "max": 10,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 101
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN ('Volibear','Teemo','Ekko')\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    10-participants.op_score_rank AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "OP Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 109
+          },
+          "id": 17,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    participants.vision_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Vision Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 3,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 117
+          },
+          "id": 18,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "frser-sqlite-datasource",
+                "uid": "P2D2EEF3E092AF52B"
+              },
+              "queryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
+              "queryType": "time series",
+              "rawQueryText": "SELECT\n    games.created_at AS 'time',\n    champions.name AS 'Champion',\n    participants.lane_score AS 'Score'\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\n    AND champions.name IN (${CHAMPION:singlequote})\nORDER BY \n    games.created_at ASC",
+              "refId": "OP Score",
+              "timeColumns": [
+                "time"
+              ]
+            }
+          ],
+          "title": "Lane Score",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "Score (.*)",
+                "renamePattern": "$1"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "By Champion",
+      "type": "row"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 40,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "description": "Which side of the map the game was on",
+        "label": "Red or Blue",
+        "multi": true,
+        "name": "SIDE",
+        "options": [
+          {
+            "selected": true,
+            "text": "Red",
+            "value": "RED"
+          },
+          {
+            "selected": true,
+            "text": "Blue",
+            "value": "BLUE"
+          }
+        ],
+        "query": "Red : RED, Blue : BLUE",
+        "type": "custom"
+      },
+      {
+        "allValue": "All",
+        "description": "The lane the game was played in",
+        "includeAll": false,
+        "label": "Lane",
+        "multi": true,
+        "name": "LANE",
+        "options": [
+          {
+            "selected": true,
+            "text": "Top",
+            "value": "TOP"
+          },
+          {
+            "selected": true,
+            "text": "Jungle",
+            "value": "JUNGLE"
+          },
+          {
+            "selected": true,
+            "text": "Middle",
+            "value": "MIDDLE"
+          },
+          {
+            "selected": true,
+            "text": "Bottom",
+            "value": "BOTTOM"
+          }
+        ],
+        "query": "Top : TOP, Jungle : JUNGLE, Middle : MIDDLE, Bottom : BOTTOM",
+        "type": "custom"
+      },
+      {
+        "definition": "SELECT\n    participants.role\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nGROUP BY participants.role;",
+        "description": "The role played",
+        "label": "Role",
+        "multi": true,
+        "name": "ROLE",
+        "options": [],
+        "query": "SELECT\n    participants.role\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nGROUP BY participants.role;",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "definition": "SELECT\n    champions.name\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nGROUP BY\n    champions.champion_id;\n",
+        "description": "The champion played",
+        "label": "Champion",
+        "multi": true,
+        "name": "CHAMPION",
+        "options": [],
+        "query": "SELECT\n    champions.name\nFROM\n    participants\nJOIN\n    games ON participants.game_id = games.game_id\nJOIN\n        champions ON participants.champion_id = champions.champion_id\nWHERE participants.summoner_name IN (${SUMMONER_NAME:singlequote})\nGROUP BY\n    champions.champion_id;\n",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "definition": "SELECT participants.summoner_name\nFROM participants\nGROUP BY participants.summoner_name\nORDER BY count(*) desc\nLIMIT 1",
+        "description": "The summoner name of the primary summoner",
+        "label": "Summoner",
+        "name": "SUMMONER_NAME",
+        "options": [],
+        "query": "SELECT participants.summoner_name\nFROM participants\nGROUP BY participants.summoner_name\nORDER BY count(*) desc\nLIMIT 1",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "League Stats",
+  "uid": "be8tq86iyycxsd",
+  "version": 13,
+  "weekStart": ""
+}
